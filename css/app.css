@@ -1,4 +1,26 @@
-img{
-  z-index: -3;
+/* CSS del clima*/
+
+#elTiempo{
+  padding:20px 100px;
+}
+
+/*CSS de la imagen de fondo*/
+#fondo {
   position: absolute;
+  z-index: -30;
+  top:-300px;
+  left: 140px;
+  width: 70%;
+}
+#acudit{
+  padding:50px 150px;
+}
+#chiste{
+  padding:50px 200px;
+}
+.points, #iconoTemp{
+  font-size: 40px;
+}
+nav{
+  border:1px solid black;
 }

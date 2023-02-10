@@ -15,33 +15,30 @@
   <title>Sprint 5 </title>
 </head>
 <body>
-  <nav class="navbar-light p-3">
-    <div class="container">
-        <!-- <img src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24"> -->
-        <h4 id="tiempo"></h4>
-        <h5 id="ciudad"></h5>
-      <img id="iconoTemp" src="" alt="">
-    </div>
-  </nav>
-  <h1 class="text-center">Chistes</h1>
-  <!-- <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-    <path fill="#0F62FE" d="M50.1,-41.1C65.5,-34.6,79.3,-17.3,82.1,2.8C84.9,23,76.9,45.9,61.4,58.9C45.9,71.8,23,74.7,2.3,72.4C-18.3,70,-36.6,62.5,-48.6,49.5C-60.6,36.6,-66.3,18.3,-60.6,5.7C-54.9,-6.9,-37.9,-13.9,-25.9,-20.4C-13.9,-27,-6.9,-33.2,5.2,-38.4C17.3,-43.6,34.6,-47.7,50.1,-41.1Z" transform="translate(100 100)" />
-  </svg> -->
-  <img src="img/blob.svg" alt="">
-  <div class="container p-4">
-    <h3 class="text-center">Preparado para reirte ? &#128514;</h3>
+  <img id="fondo" src="img/blob.svg" alt="">
+  <div id="elTiempo">
+      <!-- <img src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24"> -->
+      <div id="tiempoYciudad" class="d-inline text-dark">
+        <h4 id="tiempo" class="d-inline text-dark mx-3"></h4>
+        <h5 id="ciudad" class="d-inline text-dark"></h5>
+      </div>
+      <img id="iconoTemp" src="" alt="" class="d-inline text-dark">
+  </div>
+  <div id="acudit" class="container">
+    <h1 class="text-center text-light">Chistes</h1>
+    <h3 class="text-center text-light">Preparado para reirte ? &#128514;</h3>
     <!-- Aqui se imprime lo que consumimos de la API -->
-    <div id="chiste" class="border shadow-lg p-5"></div>
+    <div id="chiste" class="border shadow-lg text-white fw-bold"></div>
     <div id="puntuacion" class="text-center p-3" style="display:none">
-      <input id="uno" type="button" value="1" class="btn btn-warning points">
-      <input id="dos" type="button" value="2" class="btn btn-danger points">
-      <input id="tres" type="button" value="3" class="btn btn-success points">
+      <button id="uno" value="1" class="points bg-transparent border-0">&#128531;</button>
+      <button id="dos" value="2" class="points bg-transparent border-0">&#128528;</button>
+      <button id="tres" value="3" class="points bg-transparent border-0">&#129315;</button>
+    </div>
+    <div class="container p-4 text-center">
+      <button class="btn btn-warning" onclick="consumirAPIconAwait()">Siguiente chiste</button>
     </div>
   </div>
   
-  <div class="container px-5">
-    <button class="btn btn-primary" id="rqr">Siguiente chiste</button>
-  </div>
 </body>
 <script src="js/app.js"></script>
 </html>

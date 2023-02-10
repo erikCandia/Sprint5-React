@@ -9,7 +9,7 @@
 //   .then(respuesta => console.log(respuesta.provincias))
 // }
 
-
+//Para mostrar la temperatura actual, nada mas abrir el navegador
 window.addEventListener("load", function(){
   let longitud, latitud;
   if(navigator.geolocation){
@@ -20,18 +20,16 @@ window.addEventListener("load", function(){
     latitud = posicion.coords.latitude
     //ubicacion por longitud o latitud
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitud}&lon=${longitud}&appid=10296b0d94cc17bbb77607cca4697bcf`;
-
     //ubicacion por ciudad
     const urlCiudad = `https://api.openweathermap.org/data/2.5/weather?q=Barcelona&lang=es&units=metric&appid=10296b0d94cc17bbb77607cca4697bcf`;
-
-    console.log(url);
-    console.log(urlCiudad);
+    //console.log(url);
+    //console.log(urlCiudad);
   })
 }
-
   consumirApiMeteorologico()
 })
 
+//API PARA LOS DATOS METEREOLOGICOS
 //http://api.openweathermap.org/data/2.5/forecast?id=524901&appid={API key}
 const consumirApiMeteorologico = async() => {
   try {
@@ -39,27 +37,30 @@ const consumirApiMeteorologico = async() => {
       {headers:{'Accept':'application/json'}
     }); 
     const temperatura = await respuesta.json();
-    console.log(temperatura);
-    console.log(temperatura.main.temp);
-    document.querySelector("#tiempo").innerHTML = Math.trunc(temperatura.main.temp)+" ºC"
-    console.log(temperatura.name);
+    //console.log(temperatura);
+    //console.log(temperatura.main.temp);
+    document.querySelector("#tiempo").innerHTML = Math.trunc(temperatura.main.temp)+"ºC"
+    //console.log(temperatura.name);
     document.querySelector("#ciudad").innerHTML = temperatura.name
     console.log(temperatura.weather[0].icon) //muestra el id de como esta el dibujo del tiempo
-    let imagenTemp = document.querySelector("#iconoTemp");
+    let imagenTemp = document.getElementById("iconoTemp");
     let iconoTemp = temperatura.weather[0].icon;
     if(iconoTemp == '03n'){
-      imagenTemp.src = "../img/animated/cloudy-day-2.svg"
+      imagenTemp.src = "../img/animated/cloudy-day-1.svg"
+    }else if(iconoTemp == '04n'){
+      imagenTemp.src = "/img/animated/cloudy-day-2.svg"
+    }else if(iconoTemp == '01n'){
+      imagenTemp.src = "/img/animated/cloudy-night-1.svg"
     }
-
   } catch (error) {
     
   }
 }
 
 
-
-//Metodo asincrono para consumir API de CHISTES
-let currentJoke ={};
+//Metodo asincrono para consumir API de ACUDITS
+let currentJoke;
+const points = 0;
 const consumirAPIconAwait = async() => {
   try{
     const respuesta = await fetch('https://icanhazdadjoke.com',  //La peticion debe ser asincrona
@@ -69,36 +70,41 @@ const consumirAPIconAwait = async() => {
     const datos = await respuesta.json(); //la respuesta lo transformamos a fomrato Json
     //console.log(datos); //console.log(datos.status)//nos imprime el tipo de respuesta http 
     if(datos.status == 200){
-      //Si la repuesta http es 200, entonces imprimira el chiste 
+      //Si la respuesta http es 200, entonces imprimira el chiste 
       const acudit = document.querySelector("#chiste");
-      acudit.innerHTML = datos.joke; //mostramos al usuario el chiste
-      currentJoke.joke = datos.joke;
-      console.log("->",currentJoke)
+      acudit.innerHTML = datos.joke //mostramos al usuario el chiste
       //mostrara los botones de puntuacion
       document.querySelector("#puntuacion").style.display = "block";
-      //getJoke(datos.joke, date);//llamo a la funcion de puntuar los chistes
+      currentJoke = datos.joke;
+      //console.log(currentJoke);
+
     }else{
       console.log("Hay algun error");
     }
   }catch(error){
     //console.log(error);
   }
-
 }
-const puntuarChiste = function(evento){
-  console.log(currentJoke.joke)
-  const newJoke = {date : new Date(), joke:currentJoke.joke, points: evento.target.value}
-  arrayAcudits.push(newJoke)//objeto joke
-
+function puntuarChiste(evento){
+  //Añadimos los datos de la API dentro del objeto newJoke toISOString(),
+  const newJoke = {date : new Date(Date.now()).toUTCString(), joke:currentJoke, points: evento.target.value}
+  arrayAcudits.push(newJoke)//Añadimos el objeto newJoke al array creado
   console.log(arrayAcudits);
 }
-
 const arrayAcudits = [] //creo un array vacio
-const botones = document.querySelectorAll(".btn");
-document.querySelector('#rqr').addEventListener('click', () => consumirAPIconAwait())
+let reportJokes = [] //creo un array vacio
+const botones = document.querySelectorAll(".points"); //Capturamos los btn de puntuar los acudits
 botones.forEach(boton => {
-  boton.addEventListener('click',puntuarChiste)
+  boton.addEventListener('click',puntuarChiste) //le agregamos un evento click a cada btn, llamamos a la funcion puntuarChiste
 })
+
+
+// const puntuarChiste = function(evento){
+//   const newJoke = {date : new Date(), joke:evento.joke, points: evento.target.value}
+//   arrayAcudits.push(newJoke)//objeto newJoke
+//   console.log(arrayAcudits);
+// }
+//funcion para puntuar un chiste y añadirlo al array
 
 // function getJoke(chiste, date){
 //  /* let acudits = new Object(); //Creo el onjeto 
